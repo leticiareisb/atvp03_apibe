@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
-//Rota PUT
-Route::put('/users/{id}', [UserController::class, 'update']);
-
-//Rota DELETE
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
-
+Route::get('/', function () {
+    return view('welcome');
+});
