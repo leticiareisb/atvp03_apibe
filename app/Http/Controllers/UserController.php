@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\UserCreateRequest;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -8,6 +9,35 @@ use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $user = User::select('id', 'name', 'email')->paginate('2');
+
+        return [
+            'status' => 200,
+            'menssagem' => 'Usuários encontrados!!',
+            'user' => $user
+        ];
+    }
+
+    public function store(UserCreateRequest $request)
+    {
+        $data = $request->all();
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+
+        return [
+            'status' => 200,
+            'menssagem' => 'Usuário cadastrado com sucesso!!',
+            'user' => $user
+        ];
+    }
+
+
     //Atualizar o usuário
     public function update(Request $request, $id)
     {
